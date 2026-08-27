@@ -1,4 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { NookPage } from "@/components/nook-page";
+import { ObliquePage } from "@/components/oblique-page";
 
-export const Route = createFileRoute("/$")({ component: NookPage });
+export const Route = createFileRoute("/$")({ component: ObliquePage });

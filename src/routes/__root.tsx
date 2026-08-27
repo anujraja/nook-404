@@ -1,7 +1,7 @@
 import { createRootRoute, HeadContent, Outlet, Scripts } from "@tanstack/react-router";
 import appCss from "../styles.css?url";
 
-const APP_NAME = "Nook";
+const APP_NAME = "Oblique";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -11,9 +11,9 @@ export const Route = createRootRoute({
       { title: APP_NAME },
       {
         name: "description",
-        content: "This page does not exist. The room still does. A living SVG 404.",
+        content: "This page does not exist. A 404 drawn as 3D SVG.",
       },
-      { name: "theme-color", content: "#0c0b0a" },
+      { name: "theme-color", content: "#050506" },
     ],
     links: [
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
@@ -21,7 +21,7 @@ export const Route = createRootRoute({
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Outfit:wght@400;500;600&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap",
       },
       { rel: "stylesheet", href: appCss },
     ],

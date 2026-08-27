@@ -1,37 +1,34 @@
-# Nook
+# Oblique
 
-**This page does not exist. The room still does.**
+**This page does not exist.**
 
-A 404 drawn entirely in SVG — zero images, zero video, zero canvas. A wood-paneled living room lives behind a doorway while the sky cycles dawn → day → dusk → night. A white cat walks the rug. Someone reads on the sofa. Lamps warm as the room goes dark.
+A 404 drawn as chunky 3D letters on a triangular grid — one SVG, zero images. The word slowly orbits. Move (or drag) to look around.
 
-Inspired by [Cursor's 404](https://cursor.com) (the one that used four images) and [Gurbinder's SVG take](https://x.com/legionsdev/status/1938077259304517718).
+This is the technique behind [Gurbinder's SVG "DEV"](https://x.com/legionsdev/status/1938077259304517718): Cursor's 404 faked the motion with four images. The same scene is just extruded polygons, a perspective project, and a camera.
 
-## What's moving
+## How it works
 
-- **Sky** — four layered gradients crossfade on a 24s loop
-- **Lamps** — glow inverse to daylight
-- **Cat** — walks the rug, sits, turns around
-- **Person** — idle shift, arm on a laptop
-- **Curtains, pendant, steam, tail, plants** — small loops
-- **Grain** — `feTurbulence` film overlay
+1. Each glyph is a set of 2D polygons **extruded** into front, back, and side faces
+2. Faces are **rotated** (Y orbit + X tilt + pointer look)
+3. **Perspective projected** into SVG `path`s
+4. **Back-face culled**, depth-sorted, Lambert-shaded
+5. The floor is three families of lines at 0° / 60° / 120° — a triangular tessellation in the same world space
 
-Click **Dawn / Day / Dusk / Night** to lock a time of day, or leave **Cycle** running. Pause freezes everything. `prefers-reduced-motion` holds dusk and sits the cat down.
-
-## Source
+No canvas, no WebGL, no sprite sheet.
 
 | File | What it is |
 | --- | --- |
-| `src/components/nook-room.tsx` | The room — one SVG |
-| `src/components/nook-page.tsx` | 404 chrome, time controls |
-| `src/styles.css` | Tokens + every keyframe |
+| `src/components/oblique-scene.tsx` | The 3D SVG engine |
+| `src/components/oblique-page.tsx` | 404 chrome |
+| `src/styles.css` | Tokens |
 
-No PNGs, no Lottie, no sprite sheets. The illustration is markup.
+`prefers-reduced-motion` freezes the camera.
 
 ## Credit
 
-- Room idea: Cursor 404
-- "Just use SVG" energy: [@legionsdev](https://x.com/legionsdev)
-- This recreation: original drawing, not a trace of Cursor's frames
+- Motion idea: Cursor 404 (four images)
+- "Just use SVG": [@legionsdev](https://x.com/legionsdev)
+- This piece: original `404` sculpture, not a trace of anyone's frames
 
 ## License
 
