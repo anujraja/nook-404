@@ -11,7 +11,7 @@ function Face({
   w: number;
   h: number;
   transform: string;
-  tone: "front" | "side" | "top" | "bot" | "back";
+  tone: "front" | "east" | "west" | "top" | "bot" | "back";
 }) {
   return (
     <span
@@ -48,11 +48,11 @@ function Cube({
     >
       <Face w={w} h={h} tone="front" transform={`translateZ(${D / 2}px)`} />
       <Face w={w} h={h} tone="back" transform={`rotateY(180deg) translateZ(${D / 2}px)`} />
-      <Face w={D} h={h} tone="side" transform={`rotateY(-90deg) translateZ(${D / 2}px)`} />
+      <Face w={D} h={h} tone="west" transform={`rotateY(-90deg) translateZ(${D / 2}px)`} />
       <Face
         w={D}
         h={h}
-        tone="side"
+        tone="east"
         transform={`translateX(${w}px) rotateY(90deg) translateZ(${D / 2}px)`}
       />
       <Face w={w} h={D} tone="top" transform={`rotateX(90deg) translateZ(${D / 2}px)`} />
@@ -133,6 +133,7 @@ function triangleGrid() {
 }
 
 export function ObliqueScene() {
+  const stage = useRef<HTMLDivElement>(null);
   const world = useRef<HTMLDivElement>(null);
   const mouse = useRef({ x: 0, y: 0 });
   const grid = useMemo(triangleGrid, []);
@@ -140,19 +141,43 @@ export function ObliqueScene() {
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const el = world.current;
-    if (!el) return;
+    const root = stage.current;
+    if (!el || !root) return;
+    const onMove = (e: PointerEvent) => {
+      const r = root.getBoundingClientRect();
+      mouse.current = {
+        x: ((e.clientX - r.left) / r.width) * 2 - 1,
+        y: ((e.clientY - r.top) / r.height) * 2 - 1,
+      };
+    };
+    root.addEventListener("pointermove", onMove);
     let raf = 0;
+    let lx = 0;
+    let ly = 0;
     const t0 = performance.now();
     const loop = (now: number) => {
       const t = (now - t0) / 1000;
+      lx += (mouse.current.x - lx) * 0.12;
+      ly += (mouse.current.y - ly) * 0.12;
       const spin = reduce ? -42 : t * 16;
-      const rx = -28 + mouse.current.y * 9;
-      const ry = spin + mouse.current.x * 14;
+      const rx = -28 + ly * 9;
+      const ry = spin + lx * 14;
       el.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
+      const hue = 210 + lx * 95 + ly * 18;
+      root.style.setProperty("--hue", hue.toFixed(1));
+      root.style.setProperty("--px", ((lx + 1) * 50).toFixed(2));
+      root.style.setProperty("--py", ((ly + 1) * 50).toFixed(2));
+      root.style.setProperty("--lw", Math.max(0, -lx).toFixed(3));
+      root.style.setProperty("--le", Math.max(0, lx).toFixed(3));
+      root.style.setProperty("--lt", Math.max(0, -ly).toFixed(3));
+      root.style.setProperty("--lb", Math.max(0, ly).toFixed(3));
       raf = requestAnimationFrame(loop);
     };
     raf = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(raf);
+    return () => {
+      cancelAnimationFrame(raf);
+      root.removeEventListener("pointermove", onMove);
+    };
   }, []);
 
   function onPointerMove(e: React.PointerEvent<HTMLDivElement>) {
@@ -164,7 +189,11 @@ export function ObliqueScene() {
   }
 
   return (
-    <div className="oblique-stage" onPointerMove={onPointerMove}>
+    <div
+      ref={stage}
+      className="oblique-stage"
+      onPointerMove={onPointerMove}
+    >
       <div
         ref={world}
         className="oblique-world"
@@ -184,7 +213,7 @@ export function ObliqueScene() {
           <path
             d={grid}
             fill="none"
-            stroke="#6e6e80"
+            stroke="currentColor"
             strokeWidth="0.028"
             mask="url(#oblique-grid-mask)"
           />
@@ -196,6 +225,7 @@ export function ObliqueScene() {
           <LetterV />
         </div>
       </div>
+      <div className="oblique-spot" />
       <div className="oblique-vignette" />
       <div className="oblique-grain" />
     </div>

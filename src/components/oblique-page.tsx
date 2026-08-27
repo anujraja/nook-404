@@ -9,7 +9,7 @@ export function ObliquePage() {
           <p className="mt-1 text-[10px] uppercase tracking-[0.26em] text-dim">0 images</p>
         </div>
         <p className="hidden text-[10px] uppercase tracking-[0.22em] text-dim sm:block">
-          Move to look
+          Move to light
         </p>
       </header>
       <ObliqueScene />
