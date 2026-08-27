@@ -42,7 +42,7 @@
   width: 100%;
   height: 100dvh;
   overflow: hidden;
-  perspective: 700px;
+  perspective: 560px;
   perspective-origin: 50% 46%;
   cursor: crosshair;
   user-select: none;
@@ -75,16 +75,16 @@
   top: 50%;
   margin-left: -850px;
   margin-top: -850px;
-  transform: rotateX(90deg) translateZ(-110px);
+  transform: rotateX(90deg) translateZ(-100px);
   color: hsl(var(--hue) 35% 52%);
 }
 
 .oblique-word {
   display: flex;
   align-items: flex-end;
-  gap: 18px;
+  gap: 16px;
   transform-style: preserve-3d;
-  transform: translateZ(4px) scale(1.32);
+  transform: translateZ(8px) scale(1.22);
 }
 
 .ob-letter {
@@ -105,11 +105,12 @@
   left: 0;
   top: 0;
   backface-visibility: hidden;
+  box-shadow: inset 0 0 0 1px hsl(var(--hue) 75% 64% / 0.4);
 }
 
 .ob-face-front {
-  background: color-mix(in srgb, #121218 72%, hsl(var(--hue) 55% 42%) 28%);
-  box-shadow: inset 0 0 0 1.5px hsl(var(--hue) 70% 62% / 0.55);
+  background: color-mix(in srgb, #0a0a0e 82%, hsl(var(--hue) 50% 36%) 18%);
+  box-shadow: inset 0 0 0 1px hsl(var(--hue) 80% 66% / 0.7);
 }
 
 .ob-face-front::after {
@@ -146,8 +147,8 @@
 .ob-face-top {
   background: color-mix(
     in srgb,
-    #1c1c24,
-    hsl(var(--hue) 70% 62%) calc(18% + var(--lt) * 42%)
+    #14141a,
+    hsl(var(--hue) 65% 58%) calc(12% + var(--lt) * 38%)
   );
 }
 
@@ -200,7 +201,7 @@
     perspective: 620px;
   }
   .oblique-word {
-    transform: translateZ(4px) scale(0.86);
+    transform: translateZ(8px) scale(0.7);
   }
 }
 

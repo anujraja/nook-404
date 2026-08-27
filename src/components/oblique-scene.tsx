@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef } from "react";
 
-const D = 52;
+const D = 50;
 
 function Face({
   w,
@@ -66,42 +66,62 @@ function Cube({
   );
 }
 
-function LetterD() {
-  const t = 46;
-  const w = 148;
-  const h = 220;
+function LetterA() {
+  const t = 36;
+  const w = 158;
+  const h = 200;
+  const mid = w / 2 - t / 2;
+  const lean = 16;
+  const barW = 92;
   return (
     <div className="ob-letter" style={{ width: w, height: h }}>
-      <Cube w={t} h={h} x={0} y={0} />
-      <Cube w={w} h={t} x={0} y={0} />
-      <Cube w={w} h={t} x={0} y={h - t} />
-      <Cube w={t} h={h - 2 * t} x={w - t} y={t} />
+      <Cube w={t} h={h} x={mid} y={0} rz={-lean} origin={`${t / 2}px 0px`} />
+      <Cube w={t} h={h} x={mid} y={0} rz={lean} origin={`${t / 2}px 0px`} />
+      <Cube w={barW} h={32} x={(w - barW) / 2} y={h * 0.54} />
     </div>
   );
 }
 
-function LetterE() {
-  const t = 46;
-  const w = 138;
-  const h = 220;
+function LetterN() {
+  const t = 36;
+  const w = 142;
+  const h = 200;
+  const run = w - t;
+  const len = Math.hypot(run, h);
+  const ang = -(Math.atan2(run, h) * 180) / Math.PI;
   return (
     <div className="ob-letter" style={{ width: w, height: h }}>
       <Cube w={t} h={h} x={0} y={0} />
-      <Cube w={w} h={t} x={0} y={0} />
-      <Cube w={w - 18} h={40} x={0} y={(h - 40) / 2} />
+      <Cube w={t} h={h} x={w - t} y={0} />
+      <Cube w={t} h={len} x={0} y={0} rz={ang} origin={`${t / 2}px 0px`} />
+    </div>
+  );
+}
+
+function LetterU() {
+  const t = 36;
+  const w = 132;
+  const h = 200;
+  return (
+    <div className="ob-letter" style={{ width: w, height: h }}>
+      <Cube w={t} h={h - t} x={0} y={0} />
+      <Cube w={t} h={h - t} x={w - t} y={0} />
       <Cube w={w} h={t} x={0} y={h - t} />
     </div>
   );
 }
 
-function LetterV() {
-  const t = 44;
-  const h = 228;
-  const w = 156;
+function LetterJ() {
+  const t = 36;
+  const w = 120;
+  const h = 200;
+  const hook = Math.round(w * 0.2);
   return (
     <div className="ob-letter" style={{ width: w, height: h }}>
-      <Cube w={t} h={h} x={18} y={0} rz={18} origin={`${t / 2}px ${h}px`} />
-      <Cube w={t} h={h} x={w - 18 - t} y={0} rz={-18} origin={`${t / 2}px ${h}px`} />
+      <Cube w={w} h={t} x={0} y={0} />
+      <Cube w={t} h={h} x={w - t} y={0} />
+      <Cube w={w - hook} h={t} x={hook} y={h - t} />
+      <Cube w={t} h={64} x={hook} y={h - t - 50} />
     </div>
   );
 }
@@ -159,9 +179,9 @@ export function ObliqueScene() {
       const t = (now - t0) / 1000;
       lx += (mouse.current.x - lx) * 0.12;
       ly += (mouse.current.y - ly) * 0.12;
-      const spin = reduce ? -42 : t * 16;
-      const rx = -28 + ly * 9;
-      const ry = spin + lx * 14;
+      const spin = reduce ? -48 : t * 14;
+      const rx = -32 + ly * 8;
+      const ry = spin + lx * 12;
       el.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
       const hue = 210 + lx * 95 + ly * 18;
       root.style.setProperty("--hue", hue.toFixed(1));
@@ -197,7 +217,7 @@ export function ObliqueScene() {
       <div
         ref={world}
         className="oblique-world"
-        style={{ transform: "rotateX(-28deg) rotateY(-42deg)" }}
+        style={{ transform: "rotateX(-32deg) rotateY(-48deg)" }}
       >
         <svg className="oblique-floor" viewBox="-22 -22 44 44" aria-hidden>
           <defs>
@@ -219,10 +239,11 @@ export function ObliqueScene() {
           />
         </svg>
 
-        <div className="oblique-word" aria-label="DEV">
-          <LetterD />
-          <LetterE />
-          <LetterV />
+        <div className="oblique-word" aria-label="ANUJ">
+          <LetterA />
+          <LetterN />
+          <LetterU />
+          <LetterJ />
         </div>
       </div>
       <div className="oblique-spot" />

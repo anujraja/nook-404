@@ -2,7 +2,7 @@
 
 **This page does not exist.**
 
-Chunky 3D **DEV** letters on a triangular grid. Zero images — CSS 3D faces + an SVG floor. The word slowly orbits. Move to look around.
+Chunky 3D **ANUJ** letters on a triangular grid. Zero images — CSS 3D faces + an SVG floor. The word slowly orbits. Move to look around.
 
 Cursor’s 404 faked this with four pictures. Same idea, one live 3D scene.
 
